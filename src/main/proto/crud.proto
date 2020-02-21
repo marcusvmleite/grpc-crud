@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package person;
+
+import "google/protobuf/timestamp.proto";
+
+option java_package = "com.marcusvmleite.crud.grpc";
+option java_multiple_files = true;
+
+message PersonGrpc {
+
+    int32 id = 1;
+    string name = 2;
+    google.protobuf.Timestamp birth_date = 3;
+    int32 height = 4;
+    float weight = 5;
+
+    message PersonDocuments {
+        int32 id = 1;
+        string passport = 2;
+        string driver_licence = 3;
+        string national_id = 4;
+    }
+
+    message PhoneNumber {
+        int32 id = 1;
+        PhoneType type = 2;
+        string number = 3;
+
+        enum PhoneType {
+            UNKNOWN = 0;
+            HOME = 1;
+            MOBILE = 2;
+            BUSINESS = 3;
+        }
+    }
+
+    PersonDocuments documents = 6;
+    repeated PhoneNumber phone_number = 7;
+
+}
+
+message CreateUpdatePersonRequest {
+    PersonGrpc person = 1;
+}
+
+message CreateUpdatePersonResponse {
+    int32 id = 1;
+}
+
+message GetPersonRequest {
+    int32 id = 1;
+}
+
+message GetPersonResponse {
+    PersonGrpc person = 1;
+}
+
+message GetPeopleRequest {
+    string name = 1;
+}
+
+message GetPeopleResponse {
+    repeated PersonGrpc people = 1;
+}
+
+message DeletePersonRequest {
+    int32 id = 1;
+}
+
+message DeletePersonResponse {
+    bool status = 1;
+}
+
+service PersonService {
+
+    rpc CreateUpdatePerson(CreateUpdatePersonRequest) returns (CreateUpdatePersonResponse) {};
+
+    rpc GetPerson(GetPersonRequest) returns (GetPersonResponse) {};
+
+    rpc GetPeople(GetPeopleRequest) returns (GetPeopleResponse) {};
+
+    rpc DeletePerson(DeletePersonRequest) returns (DeletePersonResponse) {};
+
+}
