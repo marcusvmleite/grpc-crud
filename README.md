@@ -1,4 +1,4 @@
 # grpc-crud
 CRUD Sample with gRPC
 
-Application that simulares a real-world gRPC CRUD application.
+Application that simulates a real-world gRPC CRUD application.
